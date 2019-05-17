@@ -19,7 +19,7 @@ podTemplate(label:label,
     node(label) {
         stage('BUILD DOCKER IMAGE') {
             container('docker') {
-             sh "docker login ${ZCP_DOMAIN}-registry.cloudzcp.io -u 'cloudzcp-admin' -p 'Cloudzcp!23$'"
+             sh "docker login ${ZCP_DOMAIN}-registry.cloudzcp.io -u cloudzcp-admin -p Cloudzcp!23$"
 
                 sh "docker pull cloudzcp/zcp-iam:1.2.0-beta"
                 sh "docker tag cloudzcp/zcp-iam:1.2.0-beta ${ZCP_DOMAIN}-registry.cloudzcp.io/cloudzcp/zcp-iam:1.2.0"
