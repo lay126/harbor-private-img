@@ -23,7 +23,7 @@ podTemplate(label:label,
 
                 sh "docker pull cloudzcp/zcp-iam:1.2.0-beta"
                 sh "docker tag cloudzcp/zcp-iam:1.2.0-beta ${ZCP_DOMAIN}-registry.cloudzcp.io/cloudzcp/zcp-iam:1.2.0"
-                dockerCmd.push registry: ${ZCP_DOMAIN}-registry.cloudzcp.io, imageName: cloudzcp/zcp-iam, imageVersion: 1.2.0, credentialsId: "HARBOR_CREDENTIALS"
+                dockerCmd.push registry: 'pog-dev-registry.cloudzcp.io', imageName: 'cloudzcp/zcp-iam', imageVersion: '1.2.0', credentialsId: "HARBOR_CREDENTIALS"
              }
         }
     }
