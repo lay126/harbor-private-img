@@ -5,6 +5,7 @@ def ZCP_USERID = 'cloudzcp-admin'
 def DOCKER_IMAGE = 'lay126/harbor-private-img'
 def K8S_NAMESPACE = 'zcp-system'
 def VERSION = 'develop'
+def ZCP-DOMAIN = 'pog-dev'
  
 podTemplate(label:label,
     serviceAccount: "zcp-system-sa-${ZCP_USERID}",
@@ -20,10 +21,11 @@ podTemplate(label:label,
     node(label) {
         stage('BUILD DOCKER IMAGE') {
             container('docker') {
-                sh "docker login"
-                sh "docker pull jenkins/jenkins:lts"
-                sh "docker tag jenkins/jenkins:lts registry.au-syd.bluemix.net/cloudzcp/jenkins:lts"
-                sh "docker push ${}/cloudzcp/jenkins:lts"
+                sh "docker login ${ZCP-DOMAIN}-registry.cloudzcp.io"
+
+                sh "docker pull cloudzcp/zcp-iam:1.2.0-beta"
+                sh "docker tag cloudzcp/zcp-iam:1.2.0-beta ${ZCP-DOMAIN}-registry.cloudzcp.io/cloudzcp/zcp-iam:1.2.0"
+                sh "docker push ${ZCP-DOMAIN}-registry.cloudzcp.io/cloudzcp/zcp-iam:1.2.0"
              }
         }
     }
