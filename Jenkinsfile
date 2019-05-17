@@ -2,7 +2,6 @@
 def label = "jenkins-${UUID.randomUUID().toString()}"
  
 def ZCP_USERID = 'cloudzcp-admin'
-def DOCKER_IMAGE = 'lay126/harbor-private-img'
 def K8S_NAMESPACE = 'zcp-system'
 def VERSION = 'develop'
 def ZCP-DOMAIN = 'pog-dev'
@@ -10,8 +9,7 @@ def ZCP-DOMAIN = 'pog-dev'
 podTemplate(label:label,
     serviceAccount: "zcp-system-sa-${ZCP_USERID}",
     containers: [
-        containerTemplate(name: 'docker', image: 'docker', ttyEnabled: true, command: 'cat', envVars: [
-            envVar(key: 'DOCKER_HOST', value: 'tcp://jenkins-dind-service:2375 ')]),
+        containerTemplate(name: 'docker', image: 'docker:17-dind', ttyEnabled: true, command: 'dockerd-entrypoint.sh', privileged: true),
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', ttyEnabled: true, command: 'cat')
     ],
     volumes: [
